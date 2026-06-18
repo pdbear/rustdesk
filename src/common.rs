@@ -46,10 +46,7 @@ const BUILD_API_SERVER: &str = match option_env!("API_SERVER") {
     Some(v) => v,
     None => "",
 };
-const DEFAULT_API_SERVER: &str = match BUILD_API_SERVER {
-    "" => "https://admin.rustdesk.com",
-    v => v,
-};
+const DEFAULT_API_SERVER: &str = "https://admin.rustdesk.com";
 
 #[derive(Debug, Eq, PartialEq)]
 pub enum GrabState {
@@ -1817,7 +1814,7 @@ pub fn decode64<T: AsRef<[u8]>>(input: T) -> Result<Vec<u8>, base64::DecodeError
 
 pub async fn get_key(sync: bool) -> String {
     if !config::BUILD_RS_PUB_KEY.is_empty() {
-        return config::RS_PUB_KEY.to_owned();
+        return config::BUILD_RS_PUB_KEY.to_owned();
     }
 
     #[cfg(windows)]

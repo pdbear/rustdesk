@@ -248,10 +248,11 @@ RS_PUB_KEY='YOUR_HBBS_PUBLIC_KEY_BASE64' \
 如果只想 fork 后硬编码默认公共配置，也可以直接改源码：
 
 ```rust
-pub const DEFAULT_RENDEZVOUS_SERVER: &str = "hbbs.example.com";
+pub const BUILD_RENDEZVOUS_SERVER: &str = "hbbs.example.com";
+pub const DEFAULT_RENDEZVOUS_SERVER: &str = "rs-ny.rustdesk.com";
 pub const RENDEZVOUS_SERVERS: &[&str] = &[DEFAULT_RENDEZVOUS_SERVER];
 pub const BUILD_RELAY_SERVER: &str = "hbbr.example.com";
-pub const RS_PUB_KEY: &str = "YOUR_HBBS_PUBLIC_KEY_BASE64";
+pub const BUILD_RS_PUB_KEY: &str = "YOUR_HBBS_PUBLIC_KEY_BASE64";
 ```
 
 文件：`libs/hbb_common/src/config.rs`
