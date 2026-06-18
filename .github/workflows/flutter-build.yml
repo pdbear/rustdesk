@@ -44,6 +44,10 @@ env:
   #signing keys env variable checks
   ANDROID_SIGNING_KEY: "${{ secrets.ANDROID_SIGNING_KEY }}"
   MACOS_P12_BASE64: "${{ secrets.MACOS_P12_BASE64 }}"
+  API_SERVER: "${{ vars.API_SERVER || secrets.API_SERVER }}"
+  RENDEZVOUS_SERVER: "${{ vars.RENDEZVOUS_SERVER || secrets.RENDEZVOUS_SERVER }}"
+  RELAY_SERVER: "${{ vars.RELAY_SERVER || secrets.RELAY_SERVER }}"
+  RS_PUB_KEY: "${{ vars.RS_PUB_KEY || secrets.RS_PUB_KEY }}"
   UPLOAD_ARTIFACT: "${{ inputs.upload-artifact }}"
   SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}-2"
 

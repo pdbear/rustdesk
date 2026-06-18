@@ -78,6 +78,13 @@ fn install_android_deps() {
 }
 
 fn main() {
+    for key in ["API_SERVER"] {
+        println!("cargo:rerun-if-env-changed={key}");
+        if let Ok(value) = std::env::var(key) {
+            println!("cargo:rustc-env={key}={value}");
+        }
+    }
+
     hbb_common::gen_version();
     install_android_deps();
     #[cfg(all(windows, feature = "inline"))]

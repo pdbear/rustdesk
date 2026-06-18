@@ -42,6 +42,15 @@ use crate::{
     ui_interface::{get_api_server as ui_get_api_server, get_option, is_installed, set_option},
 };
 
+const BUILD_API_SERVER: &str = match option_env!("API_SERVER") {
+    Some(v) => v,
+    None => "",
+};
+const DEFAULT_API_SERVER: &str = match BUILD_API_SERVER {
+    "" => "https://admin.rustdesk.com",
+    v => v,
+};
+
 #[derive(Debug, Eq, PartialEq)]
 pub enum GrabState {
     Ready,
@@ -1063,6 +1072,10 @@ pub fn get_api_server(api: String, custom: String) -> String {
 }
 
 fn get_api_server_(api: String, custom: String) -> String {
+    if !BUILD_API_SERVER.is_empty() {
+        return BUILD_API_SERVER.to_owned();
+    }
+
     #[cfg(windows)]
     if let Ok(lic) = crate::platform::windows::get_license_from_exe_name() {
         if !lic.api.is_empty() {
@@ -1081,7 +1094,7 @@ fn get_api_server_(api: String, custom: String) -> String {
             return format!("http://{}", s);
         }
     }
-    "https://admin.rustdesk.com".to_owned()
+    DEFAULT_API_SERVER.to_owned()
 }
 
 #[inline]
@@ -1803,6 +1816,10 @@ pub fn decode64<T: AsRef<[u8]>>(input: T) -> Result<Vec<u8>, base64::DecodeError
 }
 
 pub async fn get_key(sync: bool) -> String {
+    if !config::BUILD_RS_PUB_KEY.is_empty() {
+        return config::RS_PUB_KEY.to_owned();
+    }
+
     #[cfg(windows)]
     if let Ok(lic) = crate::platform::windows::get_license_from_exe_name() {
         if !lic.key.is_empty() {
