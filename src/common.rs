@@ -1833,9 +1833,18 @@ pub async fn get_key(sync: bool) -> String {
         options.remove("key").unwrap_or_default()
     };
     if key.is_empty() {
-        key = config::RS_PUB_KEY.to_owned();
+        key = get_default_rs_pub_key().to_owned();
     }
     key
+}
+
+#[inline]
+pub fn get_default_rs_pub_key() -> &'static str {
+    if !config::BUILD_RS_PUB_KEY.is_empty() {
+        config::BUILD_RS_PUB_KEY
+    } else {
+        config::RS_PUB_KEY
+    }
 }
 
 pub fn pk_to_fingerprint(pk: Vec<u8>) -> String {
